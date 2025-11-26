@@ -1,65 +1,79 @@
-📝 Java 8 Streams Cheat Sheet — Interview Edition
-1️⃣ Stream Structure
-source → intermediate operations → terminal operation
 
+- **Source:** Collection, array, Stream.of(), Optional.stream()  
+- **Intermediate (lazy, chainable):** filter, map, flatMap, sorted, distinct, peek, limit, skip  
+- **Terminal (eager, triggers execution):** collect, forEach, count, reduce, anyMatch, allMatch, findFirst, min, max  
 
-Source: Collection, array, Stream.of(), Optional.stream()
+---
 
-Intermediate (lazy, chainable): filter, map, flatMap, sorted, distinct, peek, limit, skip
+## 2️⃣ Rules to Remember
 
-Terminal (eager, triggers execution): collect, forEach, count, reduce, anyMatch, allMatch, findFirst, min, max
+1. Every stream pipeline must end with a terminal operation → otherwise nothing executes.  
+2. Intermediate operations are lazy → chained transformations are not evaluated until a terminal operation is called.  
+3. Use Optional / null checks to avoid NPEs in streams.  
+4. Streams are declarative → prefer for readable, functional-style transformations; use loops for imperative logic or index-based access.  
 
-2️⃣ Rules to Remember
+---
 
-Every stream pipeline must end with a terminal operation → otherwise nothing executes.
+## 3️⃣ Commonly Used Intermediate Operations
 
-Intermediate operations are lazy → chained transformations are not evaluated until a terminal op is called.
+| Operation | Example | Notes |
+|-----------|---------|-------|
+| filter    | `.filter(s -> s.length()>3)` | Keep only elements matching condition |
+| map       | `.map(String::toUpperCase)` | Transform elements |
+| flatMap   | `.flatMap(list -> list.stream())` | Flatten nested structures |
+| sorted    | `.sorted()` / `.sorted(String::compareTo)` | Natural order or custom comparator |
+| distinct  | `.distinct()` | Remove duplicates |
+| peek      | `.peek(System.out::println)` | Debug / inspect |
+| limit     | `.limit(5)` | Take first n elements |
+| skip      | `.skip(2)` | Skip first n elements |
 
-Use Optional / null checks to avoid NPEs in streams.
+---
 
-Streams are declarative → prefer for readable, functional-style transformations; use loops for imperative logic, performance, or index-based access.
+## 4️⃣ Commonly Used Terminal Operations
 
-3️⃣ Commonly Used Intermediate Operations
-Operation	Example	Notes
-filter	.filter(s -> s.length()>3)	Keep only elements matching condition
-map	.map(String::toUpperCase)	Transform elements
-flatMap	.flatMap(list -> list.stream())	Flatten nested structures
-sorted	.sorted() / .sorted(String::compareTo)	Natural order or custom comparator
-distinct	.distinct()	Remove duplicates
-peek	.peek(System.out::println)	Debug / inspect
-limit	.limit(5)	Take first n elements
-skip	.skip(2)	Skip first n elements
-4️⃣ Commonly Used Terminal Operations
-Operation	Example	Returns
-collect	.collect(Collectors.toList())	List/Set/Map
-forEach	.forEach(System.out::println)	void
-count	.filter(x -> x>0).count()	long
-reduce	.reduce(0, Integer::sum)	Optional<T> or T
-anyMatch	.anyMatch(s -> s.startsWith("S"))	boolean
-allMatch	.allMatch(x -> x>0)	boolean
-findFirst	.findFirst()	Optional<T>
-min/max	.min(Comparator.naturalOrder())	Optional<T>
-5️⃣ Quick Examples
-Filter + Map + Collect
+| Operation   | Example | Returns |
+|------------|---------|---------|
+| collect    | `.collect(Collectors.toList())` | List/Set/Map |
+| forEach    | `.forEach(System.out::println)` | void |
+| count      | `.filter(x -> x>0).count()` | long |
+| reduce     | `.reduce(0, Integer::sum)` | Optional<T> or T |
+| anyMatch   | `.anyMatch(s -> s.startsWith("S"))` | boolean |
+| allMatch   | `.allMatch(x -> x>0)` | boolean |
+| findFirst  | `.findFirst()` | Optional<T> |
+| min/max    | `.min(Comparator.naturalOrder())` | Optional<T> |
+
+---
+
+## 5️⃣ Quick Examples
+
+### Filter + Map + Collect
+```java
 List<String> result = list.stream()
     .filter(s -> s.length() > 3)
     .map(String::toUpperCase)
     .sorted()
     .collect(Collectors.toList());
+```
 
 Count
+``` java
 long cnt = list.stream()
     .filter(s -> s.startsWith("S"))
     .count();
+```
 
 Reduce / Sum
+``` java
 int sum = list.stream()
     .mapToInt(String::length)
     .sum();
+```
 
 Grouping
+``` java
 Map<Integer, List<String>> grouped = list.stream()
     .collect(Collectors.groupingBy(String::length));
+```
 
 6️⃣ Interview Tips
 
