@@ -1,0 +1,8 @@
+left = 0
+maxResult = depends on problem
+for right = 0 to n-1:
+    include s[right] in window
+    while window violates constraint:
+        remove s[left] from window
+        left++
+    update maxResult (length, substring, sum, etc.)
