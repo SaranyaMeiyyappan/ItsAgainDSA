@@ -1,3 +1,6 @@
+# Java 8 Streams Cheat Sheet — Interview Edition
+
+## 1️⃣ Stream Structure
 
 - **Source:** Collection, array, Stream.of(), Optional.stream()  
 - **Intermediate (lazy, chainable):** filter, map, flatMap, sorted, distinct, peek, limit, skip  
@@ -75,7 +78,7 @@ Map<Integer, List<String>> grouped = list.stream()
     .collect(Collectors.groupingBy(String::length));
 ```
 
-6️⃣ Interview Tips
+## 6️⃣ Interview Tips
 
 Explain why you chose streams vs loops
 
@@ -87,6 +90,6 @@ Show readability and functional style
 
 Avoid streams for nested loops or heavy imperative logic
 
-💡 Rule of Thumb:
+## 💡 Rule of Thumb:
 
 Memorize the common intermediate + terminal ops. Understand structure, rules, and patterns. Everything else you can look up quickly.
